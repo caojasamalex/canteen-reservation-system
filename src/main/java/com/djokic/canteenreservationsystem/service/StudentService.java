@@ -9,18 +9,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import static org.hibernate.validator.internal.util.Contracts.assertTrue;
+
 @RequiredArgsConstructor
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
 
     public StudentResponse createStudent(CreateStudentRequest createStudentRequest){
-        if(studentRepository.existsByEmail(createStudentRequest.email())){
+        String regexPattern = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@"
+                + "[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
+        if(!createStudentRequest.email().matches(regexPattern)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid email format.");
+        }
+
+        if(studentRepository.existsByEmail(createStudentRequest.email().toLowerCase())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Student with this email already exists.");
         }
 
         Student student = Student.builder()
-                .email(createStudentRequest.email())
+                .email(createStudentRequest.email().toLowerCase())
                 .name(createStudentRequest.name())
                 .isAdmin(createStudentRequest.isAdmin())
                 .build();
