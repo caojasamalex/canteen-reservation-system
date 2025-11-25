@@ -8,15 +8,16 @@ Sistem omogućava studentima rezervaciju termina u studentskim menzama uz praće
 
 ## 📌 Korišćene tehnologije
 
-| Tehnologija | Verzija |
-|------------|---------|
-| Java | 21 |
-| Spring Boot | 4.0.0 |
-| Spring Web MVC | 4.0.0 |
-| Spring Data JPA | 4.0.0 |
+| Tehnologija           | Verzija |
+|-----------------------|--------|
+| Java                  | 21     |
+| Spring Boot           | 4.0.0  |
+| Spring Web MVC        | 4.0.0  |
+| Spring Data JPA       | 4.0.0  |
 | H2 In-memory Database | 2.4.240 |
-| Maven | 3.x |
-| Lombok | 1.18.42 |
+| Maven                 | 3.x    |
+| Lombok                | 1.18.42 |
+| JUnit                 |        |
 
 ---
 
@@ -29,7 +30,7 @@ Pre pokretanja potrebno je imati instalirano:
 
 Da proveriš instalacije:
 
-```
+```sh
 java -version
 mvn -version
 ```
@@ -40,7 +41,7 @@ mvn -version
 
 U root direktorijumu projekta pokrenuti:
 
-```
+```sh
 mvn clean install
 ```
 
@@ -58,13 +59,13 @@ Aplikaciju je moguće pokrenuti na dva načina:
 
 ### 🔹 1) Maven Run
 
-```
+```sh
 mvn spring-boot:run
 ```
 
 ### 🔹 2) Izgradnja izvršnog `.jar` fajla
 
-```
+```sh
 mvn clean package
 java -jar target/canteen-reservation-system-0.0.1-SNAPSHOT.jar
 ```
@@ -93,6 +94,25 @@ API prati zahteve definisane u zadatku i podržava:
 Detaljni endpoint-i nalaze se u Postman kolekciji iz zadatka.
 
 ⚠️ Pre svakog testiranja restartovati aplikaciju (zbog prazne baze).
+
+## 🧪 Testiranje
+
+Unit testovi su smešteni u `src/test/java` paketu i pokrivaju deo osnovne poslovne logike:
+
+- kreiranje i dohvat studenata (`StudentServiceTest`)
+- kreiranje, validacija i otkazivanje rezervacija (`ReservationServiceTest`)
+- osnovno podizanje Spring konteksta (`CanteenReservationSystemApplicationTests`)
+
+Za pokretanje svih testova koristi se standardna Maven komanda:
+
+```sh
+mvn test
+```
+
+Ova komanda će:
+- pokrenuti sve JUnit testove
+- koristiti H2 in-memory bazu
+- ne zahteva dodatnu konfiguraciju okruženja
 
 ---
 
