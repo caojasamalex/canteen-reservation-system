@@ -24,10 +24,10 @@ public class WorkingHour {
     @Column(nullable = false)
     private MealTypeEnum meal;
 
-    @Column(nullable = false)
+    @Column(name = "from_time", nullable = false)
     private LocalTime from;
 
-    @Column(nullable = false)
+    @Column(name = "to_time", nullable = false)
     private LocalTime to;
 
     @ManyToOne(fetch = FetchType.LAZY)
