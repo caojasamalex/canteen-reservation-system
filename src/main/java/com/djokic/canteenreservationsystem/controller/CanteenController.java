@@ -3,12 +3,15 @@ package com.djokic.canteenreservationsystem.controller;
 import com.djokic.canteenreservationsystem.dto.canteen.CanteenResponse;
 import com.djokic.canteenreservationsystem.dto.canteen.CreateCanteenRequest;
 import com.djokic.canteenreservationsystem.dto.canteen.UpdateCanteenRequest;
+import com.djokic.canteenreservationsystem.dto.status.CanteenStatusResponse;
 import com.djokic.canteenreservationsystem.service.CanteenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -50,5 +53,28 @@ public class CanteenController {
             @PathVariable Long id){
         canteenService.deleteCanteen(studentId, id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/status")
+    public List<CanteenStatusResponse> getStatusForAll(
+            @RequestParam("startDate") LocalDate startDate,
+            @RequestParam("endDate") LocalDate endDate,
+            @RequestParam("startTime") LocalTime startTime,
+            @RequestParam("endTime") LocalTime endTime,
+            @RequestParam("duration") int duration
+    ){
+        return canteenService.getStatusForAll(startDate,endDate,startTime,endTime,duration);
+    }
+
+    @GetMapping("/{id}/status")
+    public CanteenStatusResponse getStatusForCanteen(
+            @PathVariable Long id,
+            @RequestParam("startDate") LocalDate startDate,
+            @RequestParam("endDate") LocalDate endDate,
+            @RequestParam("startTime") LocalTime startTime,
+            @RequestParam("endTime") LocalTime endTime,
+            @RequestParam("duration") int duration
+    ){
+        return canteenService.getStatusForCanteen(id, startDate, endDate, startTime, endTime, duration);
     }
 }
