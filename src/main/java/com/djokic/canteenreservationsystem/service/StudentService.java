@@ -16,7 +16,7 @@ public class StudentService {
 
     public StudentResponse createStudent(CreateStudentRequest createStudentRequest){
         if(studentRepository.existsByEmail(createStudentRequest.email())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Student with this email already exists.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Student with this email already exists.");
         }
 
         Student student = Student.builder()
@@ -29,8 +29,8 @@ public class StudentService {
 
         return new StudentResponse(
                 saved.getId(),
-                saved.getEmail(),
                 saved.getName(),
+                saved.getEmail(),
                 saved.isAdmin()
         );
     }

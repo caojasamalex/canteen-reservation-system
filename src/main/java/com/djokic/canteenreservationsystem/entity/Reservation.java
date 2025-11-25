@@ -2,10 +2,7 @@ package com.djokic.canteenreservationsystem.entity;
 
 import com.djokic.canteenreservationsystem.enumeration.ReservationStatusEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,6 +12,7 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
